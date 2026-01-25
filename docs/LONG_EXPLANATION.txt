@@ -1,0 +1,8 @@
+DUŽA VERZIJA (3–5 minuta objašnjenja)
+Python Code Analyzer je komandno-linijski (CLI) alat namenjen automatskoj analizi Python koda i unapređenju kvaliteta projekata. Rad alata počinje tako što mu se prosledi putanja do projekta ili fajla. Alat zatim prolazi kroz kod i koristi statičke analizatore, kao što je Ruff, da bi pronašao greške, upozorenja i loše prakse – na primer neiskorišćene importe, potencijalne bugove, loše formatiranje ili problematične konstrukcije. Svi pronađeni problemi se zatim organizuju i pretvaraju u čitljiv izveštaj (TXT) ili strukturisan format (JSON), koji se može dalje koristiti za automatizaciju ili integraciju sa drugim alatima. Za svaki problem se čuva informacija o fajlu, liniji koda i opisu, a po potrebi se dodaje i kontekst linija, kako bi bilo jasno u kom delu koda se greška nalazi. U AI režimu, alat ide korak dalje. Na osnovu pronađenih problema i konteksta koda, generiše se precizno definisan AI prompt koji se koristi za dobijanje predloga ispravki. U naprednoj (Pro) verziji, te ispravke mogu automatski da se primene na kod, ali isključivo na bezbedan način:
+-pravi se backup pre izmene
+-vodi se audit log svih promena
+-postoji mogućnost “dry-run” režima, gde se samo prikaže šta bi bilo izmenjeno
+Na ovaj način, alat kombinuje klasičnu statičku analizu i AI asistenciju, ali zadržava kontrolu i transparentnost, što je ključno u profesionalnom razvoju softvera. Osnovna (Lite) verzija alata služi kao javna demonstracija funkcionalnosti i znanja, dok napredna verzija dodaje automatizaciju, AI popravke i dodatne profesionalne mogućnosti.
+
+“To je CLI alat koji analizira Python kod, generiše detaljne izveštaje o problemima i, u naprednom režimu, koristi AI da predloži ili bezbedno primeni popravke uz audit i backup.”

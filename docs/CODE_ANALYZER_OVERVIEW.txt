@@ -1,0 +1,117 @@
+CODE_ANALYZER_OVERVIEW
+
+Naziv alata (primer): Python Code Analyzer (Lite/Pro)
+Svrha: alat za automatsku analizu Python koda, izradu izveštaja o problemima i (u AI modu) predlog/primenu popravki, uz opcije za evidenciju i kontrolu.
+
+1) Šta alat radi – od početka do kraja (workflow)
+Alat se pokreće iz terminala (CLI) i cilj mu je da:
+Pređe kroz folder/projekat (ili pojedinačni fajl) koji mu proslediš kao ulaz.
+Analizira kod i pronađe probleme:
+sintaksne i stilističke probleme (formatiranje, neiskorišćeni importi, loše imenovanje…)
+potencijalne bugove i “code smells”
+(zavisno od opcija) dodatne provere koje mi uključimo u pipeline
+Sakupi rezultate (lista problema + gde se tačno nalaze u fajlu: putanja, linija, opis).
+Generiše izlaz u jednom ili više formata:
+tekstualni report (npr. report.txt)
+JSON/struktuisan format (koristan za dalju obradu, automatizaciju, UI)
+dodatni fajlovi: prompt za AI, audit log, summary…
+(Opcionalno) AI mod:
+napravi “AI prompt” iz problema + kontekst linija koda
+dobije predlog popravki (npr. kroz ai_fixes.json)
+(opciono) primeni popravke automatski, pravi backup, vodi audit evidenciju
+Poenta: alat može da bude “samo analiza + report” (Lite), ili “analiza + AI predlozi + auto-apply” (Pro / napredni režim).
+
+2) Šta je CLI i zašto je bitan
+CLI (Command Line Interface) znači da se alat koristi kroz komandnu liniju (CMD/PowerShell/Terminal), npr:
+uneseš komandu
+dodaš argumente (putanja, opcije, format izlaza)
+dobiješ rezultat u fajl(ovima)
+Zašto je CLI dobar:
+radi brzo i pouzdano
+lako se automatizuje (skripte, Task Scheduler, CI/CD)
+isti je tok rada i na Windows i na Linux-u (uz sitne razlike)
+CLI je često profesionalni standard za razvojne alate (linters, test runners, build alati, analyzers).
+
+
+
+
+
+
+
+
+3) Šta je Ruff (i zašto ga koristimo)
+Ruff je moderan, ekstremno brz linter i analyzer za Python. U praksi:
+pronalazi veliki broj tipičnih grešaka i loših praksi
+pokriva “pravila” koja su ranije bila raspoređena na više alata
+radi brzo čak i na većim projektima
+U našem alatu Ruff služi kao “engine” koji daje osnovne i pouzdane nalaze (issues).
+Mi onda te nalaze:
+formatiramo u report
+filtriramo / grupišemo
+dodajemo kontekst linije koda
+prosleđujemo AI modu (ako je uključen)
+Znači: Ruff je detektor, a naš alat je orchestrator koji sve to organizuje, snima, formatira i po potrebi šalje u AI tok.
+
+4) Šta je “AI mod” i kako radi u našem alatu
+AI mod je režim gde alat koristi rezultate analize (npr. iz Ruff-a) da:
+Sastavi prompt za AI:
+lista problema (opis + lokacija)
+relevantni delovi koda (kontekst linije oko greške)
+pravila/ograničenja (npr. “ne menjaj semantiku”, “ne uvodi nove zavisnosti”…)
+Dobije predloge popravki:
+tipično u strukturisanom formatu (JSON) da može automatski da se primeni
+svaki predlog sadrži: fajl, opseg linija, stari tekst / novi tekst ili patch instrukciju
+(Opcionalno) Primeni popravke (“apply”):
+napravi backup pre izmene (da može rollback)
+upiše audit log (šta je promenjeno i kad)
+nakon primene može ponovo da pokrene analizu da potvrdi da je bolje
+Važno: AI mod je moćan, ali mora biti kontrolisan:
+zato imamo “dry-run” (samo pokaži šta bi menjao, bez menjanja fajlova)
+zato imamo audit log
+zato imamo backup
+U Lite verziji, AI mod može biti isključen ili ograničen (npr. samo generisanje prompta bez auto-apply).
+
+5) Šta znači “kontekst linije” i zašto se dodaje
+Kada se prijavi greška na liniji npr. 120, često nije dovoljno videti samo tu liniju.
+Kontekst linije su par linija iznad i ispod, npr. 3–5 linija, da:
+čovek razume šta se dešava
+AI dobije bolju sliku i predloži tačniju ispravku
+Bez konteksta, AI ili korisnik mogu da pogreše u proceni.
+
+
+
+6) Koje izlaze alat tipično pravi (output fajlovi)
+Zavisno od opcija, alat može napraviti:
+report.txt – ljudski čitljiv izveštaj
+report.json – strukturisan izveštaj (za automatizaciju)
+ai_prompt.md ili ai_prompt.txt – prompt spreman za AI
+ai_fixes.json – predlozi popravki u JSON formatu
+audit.jsonl – audit evidencija (JSON Lines), red po red promena
+backup fajlovi / folder – kopija pre izmene
+Ovo je profesionalni pristup: odvojen “readable” report za čoveka i “machine-readable” output za alat/skripte.
+
+7) Šta je “Lite” a šta “Pro” (model objave na GitHub)
+Lite (javno na GitHub):
+analiza + report
+osnovne opcije (format, template, context)
+može i generisanje AI prompta (bez primene)
+cilj: demonstracija alata i korisnosti, plus portfolio
+Pro (privatno / komercijalno):
+AI auto-apply
+napredne heuristike, scoring, napredna automatizacija
+GUI i dodatne integracije
+dodatna logika koja je “know-how”
+Cilj Lite verzije je: “Pokaži vrednost i kvalitet”, a Pro čuva “business value”.
+
+8) Primer kako bih objasnio alatu nekome (kratka priča)
+“Ovo je CLI alat koji uzme Python projekat, pokrene statičku analizu (npr. Ruff), sakupi sve greške i loše prakse i napravi izveštaj. Po potrebi doda kontekst koda i generiše prompt za AI. U naprednom režimu može i da primeni AI predložene popravke bezbedno, uz backup i audit log, tako da se tačno zna šta je promenjeno i može da se vrati unazad.”
+
+9) Tipična pitanja koja ti mogu postaviti (i gotovi odgovori)
+P: Da li alat menja kod?
+O: U osnovnom režimu ne, samo analizira i pravi report. U AI režimu može da predloži ili primeni izmene, ali uz backup i audit log (i opciju dry-run).
+P: Zašto Ruff, a ne neki drugi alat?
+O: Ruff je brz i pokriva širok set pravila. Mi ga koristimo kao stabilan analizator, a naš alat dodaje orkestraciju, izveštaje, kontekst, i AI tok.
+P: Da li je AI pouzdan?
+O: AI nije 100% garantovan, zato imamo dry-run, backup, audit log i mogućnost ponovne analize posle izmena. AI je pomoćnik, ne zamena za proveru.
+P: Šta dobijam na kraju?
+O: Dobiješ report sa lokacijama problema, i po potrebi JSON za dalju automatizaciju, a u naprednom režimu i predloge/fix-ove.
