@@ -22,7 +22,7 @@ Advanced features are available in a separate PRO edition.
 
 ## Install
 
-```bash
+'''bash
 pip install -r requirements.txt
 
 
