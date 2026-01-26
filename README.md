@@ -22,8 +22,29 @@ CLI alat za analizu Python projekata. LITE verzija fokusirana je na:
 ## Instalacija
 
 ### 1) Python
-Potrebno: Python 3.10+ (preporuka)
+Potrebno: Python 3.10+ 
 
 ### 2) Ruff
 ```bash
 pip install ruff
+
+Quick test:
+python analyzer-lite.py examples/sample_bad.py --out report.txt --json report.json --context 2
+
+## Quickstart
+
+```bash
+pip install -r requirements.txt
+python analyzer-lite.py examples/sample_bad.py --out report.txt --json report.json --context 2
+
+
+
+### B) “LITE vs PRO” mini tabela 
+
+```md
+## LITE vs PRO
+
+- LITE: analiza + report (TXT/JSON), opcioni context
+- PRO: AI auto-fix, advanced scoring, batch pipeline, audit/backup workflow, GUI (planirano)
+
+
