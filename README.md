@@ -1,50 +1,55 @@
 # Py Code Analyzer (LITE)
 
-CLI alat za analizu Python projekata. LITE verzija fokusirana je na:
-- pokretanje statičke analize (Ruff),
-- generisanje izveštaja (TXT + JSON),
-- opcioni prikaz “kontekst linija” oko problema.
+A simple, fast CLI tool for analyzing Python projects using **Ruff** and generating reports in **TXT** and **JSON**.
 
-> Napomena: napredne funkcije (npr. AI auto-fix, advanced scoring, GUI) nisu deo LITE verzije.
+> This repository contains the **LITE** edition (public). Advanced features such as AI auto-fix, scoring, batch automation, and GUI are planned / available in a separate PRO edition.
 
 ---
 
-## Šta radi
+## What it does (end-to-end)
 
-1) Uzme putanju do projekta/foldera ili fajla  
-2) Pokrene **Ruff** i prikupi nalaze (warnings/errors)  
-3) Sačuva izveštaje:
-- `report.txt` (čitljivo za čoveka)
-- `report.json` (strukturisano za automatizaciju)
+1. Takes a target path (file or folder)
+2. Runs `ruff check` on the target
+3. Parses findings and generates:
+   - `report.txt` (human-readable)
+   - `report.json` (machine-readable)
+4. (Optional) Adds **context lines** around the reported location
 
 ---
 
-## Instalacija
+## Requirements
 
-### 1) Python
-Potrebno: Python 3.10+ 
+- Python 3.10+ recommended
+- Ruff installed (via requirements)
 
-### 2) Ruff
-```bash
-pip install ruff
+---
 
-Quick test:
-python analyzer-lite.py examples/sample_bad.py --out report.txt --json report.json --context 2
-
-## Quickstart
+## Install
 
 ```bash
 pip install -r requirements.txt
-python analyzer-lite.py examples/sample_bad.py --out report.txt --json report.json --context 2
 
 
+Run against the current folder:
 
-### B) “LITE vs PRO” mini tabela 
+```bash
+python analyzer-lite.py . --out report.txt --json report.json
 
-```md
-## LITE vs PRO
 
-- LITE: analiza + report (TXT/JSON), opcioni context
-- PRO: AI auto-fix, advanced scoring, batch pipeline, audit/backup workflow, GUI (planirano)
+## Exit codes
 
+- `0` – no issues found
+- `1` – issues found
+- `2` – execution error (invalid path, Ruff not installed, etc.)
+
+## Why Ruff?
+
+Ruff is a fast, modern Python linter that covers a wide range of rules.
+In this project, Ruff acts as the analysis engine, while this tool handles
+orchestration, reporting, and optional context extraction.
+
+## Scope and limitations
+
+This tool focuses on static analysis and reporting.
+It does not execute code, run tests, or modify files in the LITE edition.
 
