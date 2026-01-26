@@ -29,27 +29,32 @@ A simple, fast CLI tool for analyzing Python projects using **Ruff** and generat
 ```bash
 pip install -r requirements.txt
 
+##Quickstart
+Run against a single file:
+
+python analyzer-lite.py examples/sample_bad.py --out report.txt --json report.json --context 2
 
 Run against the current folder:
-
-```bash
 python analyzer-lite.py . --out report.txt --json report.json
 
+##Exit codes
 
-## Exit codes
+0 – no issues found
 
-- `0` – no issues found
-- `1` – issues found
-- `2` – execution error (invalid path, Ruff not installed, etc.)
+1 – issues found
 
-## Why Ruff?
+2 – execution error (invalid path, Ruff not installed, etc.)
+
+
+Why Ruff?
 
 Ruff is a fast, modern Python linter that covers a wide range of rules.
 In this project, Ruff acts as the analysis engine, while this tool handles
 orchestration, reporting, and optional context extraction.
 
-## Scope and limitations
+Scope and limitations
 
 This tool focuses on static analysis and reporting.
 It does not execute code, run tests, or modify files in the LITE edition.
+
 
