@@ -1,6 +1,7 @@
 # Py Code Analyzer (LITE)
 
 A simple, fast CLI tool for analyzing Python projects using Ruff and generating reports.
+First stable public LITE release – v1.0.0
 
 ## Edition / Scope Note (LITE vs PRO)
 
