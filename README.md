@@ -1,57 +1,108 @@
-# Py Code Analyzer (LITE)
+# py-code-analyzer-lite
 
-A simple, fast CLI tool for analyzing Python projects using Ruff and generating reports.
-First stable public LITE release – v1.0.0
+**Lightweight Python static analysis with practical reports.**
 
-## Edition / Scope Note (LITE vs PRO)
+`py-code-analyzer-lite` is a lightweight CLI tool for Python code inspection built around practical output, readable reports, and simple workflow integration.
 
-This repository contains the LITE edition (public).
-Advanced features are available in a separate PRO edition.
+The project is designed for users who want a straightforward analysis tool that helps detect issues, organize results, and improve review of Python code without unnecessary complexity.
 
-## What it does (end-to-end)
+---
 
-1. Takes a target path (file or folder)
-2. Runs Ruff static analysis
-3. Parses findings
-4. Generates TXT and JSON reports
-5. Optionally adds context lines
+## Overview
 
-## Requirements
+This tool focuses on:
 
-- Python 3.10+
-- Ruff (installed via requirements.txt)
+- lightweight Python code analysis
+- practical CLI usage
+- readable TXT and JSON reports
+- integration with Ruff
+- workflow-friendly output
 
-## Install
+It is intended as a simpler and more accessible version of a broader tooling direction focused on developer productivity and code review.
 
-'''bash
-pip install -r requirements.txt
+---
 
+## Why I Built It
 
-## QUICKSTART
+I wanted to create a compact tool that keeps the analysis workflow simple while still producing useful output.
 
-python analyzer-lite.py examples/sample_bad.py --out report.txt --json report.json --context 2
+Instead of building something overloaded, the goal was to keep it practical:
+- run analysis quickly
+- generate useful reports
+- make results easier to inspect
+- support real code review workflows
 
-python analyzer-lite.py . --out report.txt --json report.json
-## CLI OPTIONS
-target
---out
---json
---context
+---
 
-## EXIT CODES
-0 – no issues found
-1 – issues found
-2 – execution error
+## Main Goals
 
-## WHY RUFF?
-Ruff is a fast Python linter.
-This tool uses Ruff as the analysis engine and adds orchestration and reporting.
+- provide lightweight static analysis for Python projects
+- generate practical reports in simple formats
+- integrate Ruff-based checks into a cleaner workflow
+- keep the tool simple, usable, and easy to present
 
-## SCOPE & LIMITATIONS
-This tool performs static analysis only.
-It does not execute code, run tests, or modify files in the LITE edition.
+---
 
-## LICENSE
-MIT
+## Features
 
+- CLI-based workflow
+- Python-focused static analysis
+- TXT report generation
+- JSON report generation
+- Ruff integration
+- lightweight project structure
 
+---
+
+## Tech Stack
+
+- **Python**
+- **Ruff**
+- CLI workflows
+- report generation
+
+---
+
+## Project Status
+
+**Released / actively maintained as a public portfolio project**
+
+This project is part of a broader public portfolio focused on:
+- Python automation
+- developer tools
+- code analysis
+- practical technical workflows
+
+---
+
+## Planned Improvements
+
+- clearer documentation
+- improved examples
+- stronger project presentation
+- expanded report polish
+- continued refinement
+
+---
+
+## Related Projects
+
+- **ispravko** – broader Python code analysis direction
+- **portfolio website** – public presentation of projects
+- other automation and workflow-based tools
+
+---
+
+## Author
+
+**Nemanja Stojanović**  
+IT Engineer focused on Python automation, web scraping, IT support, and developer tools.
+
+- [LinkedIn](https://www.linkedin.com/in/nemanjastojanovicit/)
+- [GitHub](https://github.com/Necilee)
+
+---
+
+## Notes
+
+This repository represents a lightweight and practical approach to Python code analysis, built as part of a larger portfolio of useful technical tools.
